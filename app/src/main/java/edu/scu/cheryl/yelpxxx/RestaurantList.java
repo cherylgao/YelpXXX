@@ -2,9 +2,11 @@ package edu.scu.cheryl.yelpxxx;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,9 @@ import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
 import com.yelp.clientlib.entities.SearchResponse;
+import com.yelp.clientlib.entities.options.CoordinateOptions;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
 
 public class RestaurantList extends AppCompatActivity implements AdapterView.OnItemClickListener {
     List<Business> restaurants;
@@ -32,37 +39,81 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
     private static final String CONSUMER_SECRET = "2tfEDEf3aX2b93BJj86IQHPe270";
     private static final String TOKEN = "JrmitrWu9XVqy0namjf6PGLFZ_370LNc";
     private static final String TOKEN_SECRET = "Pse21d6tQkRqinuQUYnADDs-s3c";
-
+    private ListView lv;
+    Call<SearchResponse> call;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
         String restaurant= getIntent().getStringExtra("restaurant");
-        String city=getIntent().getStringExtra("city");
-        YelpAPIFactory apiFactory = new YelpAPIFactory(CONSUMER_KEY, CONSUMER_SECRET,TOKEN,TOKEN_SECRET);
-        YelpAPI yelpAPI= apiFactory.createAPI();
-        Map<String, String> params= new HashMap<>();
-        params.put("term", restaurant);
-        params.put("limit", "4");
-        Call<SearchResponse> call= yelpAPI.search(city, params);
-        try {
+        final String city=getIntent().getStringExtra("city");
+        final String latitude=getIntent().getStringExtra("latitude");
+        final String longitude=getIntent().getStringExtra("longitude");
+
+            final Map<String, String> para = new HashMap<>();
+            para.put("term", restaurant);
+            para.put("limit", "4");
+            para.put("lang", "fr");
+            lv = (ListView) findViewById(R.id.restaurantList);
+            lv.setOnItemClickListener(this);
+            final RestaurantList cur = this;
+        /*try {
             Response<SearchResponse> response = call.execute();
-            SearchResponse searchResponse=response.body();
-            restaurants=searchResponse.businesses();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+            new AsyncTask<Void, Void, String>() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    try {
+                        YelpAPIFactory apiFactory = new YelpAPIFactory(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
+                        YelpAPI yelpAPI = apiFactory.createAPI();
+                        if (city!=null) {
+                             call = yelpAPI.search(city, para);
+                        }else if (latitude!=null) {
+                            CoordinateOptions coordinate = CoordinateOptions.builder()
+                                    .latitude(Double.parseDouble(latitude))
+                                    .longitude(Double.parseDouble(longitude)).build();
+                            call = yelpAPI.search(coordinate, para);
+                        }
+                        Response<SearchResponse> response = call.execute();
+                        restaurants = response.body().businesses();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return "s";
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    lv.setAdapter(new RestaurantArrayAdaptor(cur, R.layout.my_list, restaurants));
+
+                    //mSearchResultsText.setText(result);
+                    //setProgressBarIndeterminateVisibility(false);
+                }
+            }.execute();
+
+        /*Callback<SearchResponse> callback=new Callback<SearchResponse>(){
+
+            @Override
+            public void onResponse(Response<SearchResponse> response, Retrofit retrofit) {
+                //Response<SearchResponse> response = call.execute();
+                SearchResponse searchResponse=response.body();
+                //restaurants=searchResponse.businesses();
+                //update the UI text with the searchReponse
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                //System.out.println("wrong");
+            }
+        };*/
+            //call.enqueue(callback);
+            //restaurants = new ArrayList<>();
 
 
-        }catch(IOException e){
-            toast("IOException");
-        }
-
-
-
-        ListView lv = (ListView) findViewById(R.id.restaurantList);
-        lv.setAdapter(new RestaurantArrayAdaptor(this, R.layout.my_list, restaurants));
-        lv.setOnItemClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("YelpXXX");
+        actionBar.setTitle("Pley");
         actionBar.setSubtitle("Beat Yelp!");
         //actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.action_bar_background));
         //actionBar.setIcon(R.mipmap.ic_fish);
@@ -76,7 +127,7 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
 
         Business restaurant = restaurants.get(position);
         Intent intent = new Intent(RestaurantList.this, DetailActivity.class);
-        intent.putExtra("restaurantName", restaurant.id());
+        intent.putExtra("id", restaurant.id());
         startActivity(intent);
 
     }

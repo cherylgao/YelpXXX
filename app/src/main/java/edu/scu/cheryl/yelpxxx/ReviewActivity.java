@@ -36,7 +36,7 @@ public class ReviewActivity extends AppCompatActivity {
             default:
                 toast("unknown action ...");
         }
- 
+
         return true;
     }
     private void toast(String msg) {

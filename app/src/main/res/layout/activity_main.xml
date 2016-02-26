@@ -18,7 +18,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Nearby Restaurant"
+        android:text="View Nearby List"
         android:id="@+id/nearbyButton"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
