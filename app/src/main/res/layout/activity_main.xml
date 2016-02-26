@@ -84,7 +84,8 @@
         android:text="New Text"
         android:id="@+id/lblLocation"
         android:layout_below="@+id/searchButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+         />
 
     <Button
         android:layout_width="wrap_content"

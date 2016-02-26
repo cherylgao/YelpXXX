@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lucky.setOnClickListener(this);
         restaurantName = (EditText) findViewById(R.id.restaurantName);
         show= (Button) findViewById(R.id.show);
+        show.setOnClickListener(this);
 
         cityName = (EditText) findViewById(R.id.cityName);
 
@@ -88,22 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnected(Bundle connectionHint) {
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
+
         getLocation();
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//             mLatitudeText= String.valueOf(mLastLocation.getLatitude());
-//             mLongitudeText=String.valueOf(mLastLocation.getLongitude());
-//        }
+
     }
     private boolean checkPlayServices(){
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -119,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    void getLocation() {
+    public void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -142,18 +130,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnectionSuspended(int i) {
+
         mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStart() {
-        mGoogleApiClient.connect();
         super.onStart();
+        mGoogleApiClient.connect();
+
     }
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
         super.onStop();
+        mGoogleApiClient.disconnect();
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkPlayServices();
+        mGoogleApiClient.connect();
     }
     @Override
     public void onClick(View v){
@@ -168,9 +166,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.show:
                 getLocation();
+                break;
             case R.id.luckyButton:
                 Intent intent1= new Intent(MainActivity.this, LuckyActivity.class);
                 startActivity(intent1);
+                break;
             case R.id.searchButton:
                 restaurant=restaurantName.getText().toString();
                 city=cityName.getText().toString();
