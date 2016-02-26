@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="edu.scu.cheryl.yelpxxx.LuckyActivity"
+    android:weightSum="1">
+
+
+
+<TextView android:text="Feel Lucky" android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:layout_weight="0.15"
+    android:textSize="30dp"
+    android:textStyle="bold"
+    android:id="@+id/textView2"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="17dp" />
+
+
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Type"
+    android:textSize="20dp"
+    android:id="@+id/textView"
+    android:layout_marginTop="22dp"
+    android:layout_below="@+id/textView2"
+    android:layout_alignParentLeft="true" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Chinese"
+    android:id="@+id/chinese"
+    android:layout_below="@+id/textView"
+    android:layout_alignParentLeft="true"
+    android:checked="false" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Korean"
+    android:id="@+id/koeran"
+    android:layout_alignTop="@+id/chinese"
+    android:layout_toRightOf="@+id/chinese"
+    android:checked="false" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Thai"
+    android:id="@+id/thai"
+    android:layout_alignTop="@+id/koeran"
+    android:layout_toRightOf="@+id/koeran"
+    android:checked="false" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Mexican"
+    android:id="@+id/mexican"
+    android:layout_below="@+id/thai"
+    android:layout_alignParentLeft="true"
+    android:checked="false" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="American"
+    android:id="@+id/american"
+    android:layout_alignTop="@+id/thai"
+    android:layout_toRightOf="@+id/thai"
+    android:layout_toEndOf="@+id/thai"
+    android:checked="false" />
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Japanese"
+    android:id="@+id/janpanese"
+    android:layout_below="@+id/koeran"
+    android:layout_toRightOf="@+id/mexican"
+    android:layout_toEndOf="@+id/mexican"
+    android:checked="false" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="20dp"
+    android:text="Price Range"
+    android:id="@+id/textView3"
+    android:layout_above="@+id/cheap"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="$"
+    android:id="@+id/cheap"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:checked="false" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="$$"
+    android:id="@+id/medium"
+    android:checked="false"
+    android:layout_above="@+id/textView4"
+    android:layout_alignLeft="@+id/fifMile"
+    android:layout_alignStart="@+id/fifMile" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="$$$"
+    android:id="@+id/expensive"
+    android:checked="false"
+    android:layout_above="@+id/textView4"
+    android:layout_toLeftOf="@+id/american"
+    android:layout_toStartOf="@+id/american" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="$$$$"
+    android:id="@+id/vExpensive"
+    android:checked="false"
+    android:layout_alignTop="@+id/expensive"
+    android:layout_alignRight="@+id/american"
+    android:layout_alignEnd="@+id/american" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Distance"
+    android:id="@+id/textView4"
+    android:textSize="20dp"
+    android:layout_marginTop="28dp"
+    android:layout_below="@+id/cheap"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="5 Miles"
+    android:id="@+id/fiveMile"
+    android:checked="false"
+    android:layout_below="@+id/textView4"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="15 Miles"
+    android:id="@+id/fifMile"
+    android:layout_alignTop="@+id/fiveMile"
+    android:layout_alignLeft="@+id/janpanese"
+    android:layout_alignStart="@+id/janpanese"
+    android:checked="false" />
+
+<RadioButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="25 miles"
+    android:id="@+id/twMile"
+    android:layout_alignTop="@+id/fifMile"
+    android:layout_toRightOf="@+id/janpanese"
+    android:layout_toEndOf="@+id/janpanese"
+    android:checked="false" />
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Rock N Roll"
+    android:id="@+id/random"
+    android:layout_alignParentBottom="true"
+    android:layout_alignRight="@+id/expensive"
+    android:layout_alignEnd="@+id/expensive"
+    android:layout_marginBottom="52dp" />
+
+
+</RelativeLayout>

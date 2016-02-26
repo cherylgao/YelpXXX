@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_information"
+        android:icon="@drawable/ic_action_general"
+        android:orderInCategory="120"
+        app:showAsAction="never"
+        android:title="About Us"/>
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/ic_action_general"
+        android:orderInCategory="140"
+        app:showAsAction="never"
+        android:title="Uninstall"/>
+    <!--<item-->
+    <!--android:id="@+id/action_download"-->
+    <!--android:icon="@drawable/ic_action_download"-->
+    <!--android:orderInCategory="160"-->
+    <!--app:showAsAction="ifRoom"-->
+    <!--android:title="Download"/>-->
+    <!--<item-->
+    <!--android:id="@+id/action_settings"-->
+    <!--android:orderInCategory="180"-->
+    <!--app:showAsAction="never"-->
+    <!--android:title="Settings"/>-->
+    <!--<item-->
+    <!--android:id="@+id/action_about"-->
+    <!--android:orderInCategory="200"-->
+    <!--app:showAsAction="never"-->
+    <!--android:title="About"/>-->
+
+</menu>
