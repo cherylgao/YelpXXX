@@ -78,4 +78,21 @@
         android:layout_toLeftOf="@+id/cityName"
         android:layout_toStartOf="@+id/cityName" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/lblLocation"
+        android:layout_below="@+id/searchButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="showLocation"
+        android:id="@+id/show"
+        android:layout_below="@+id/lblLocation"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
 </RelativeLayout>

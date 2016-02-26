@@ -47,8 +47,8 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_restaurant_list);
         String restaurant= getIntent().getStringExtra("restaurant");
         final String city=getIntent().getStringExtra("city");
-        final String latitude=getIntent().getStringExtra("latitude");
-        final String longitude=getIntent().getStringExtra("longitude");
+        final double latitude=getIntent().getDoubleExtra("latitude", 0.0);
+        final double longitude=getIntent().getDoubleExtra("longitude", 0.0);
 
             final Map<String, String> para = new HashMap<>();
             para.put("term", restaurant);
@@ -70,10 +70,10 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
                         YelpAPI yelpAPI = apiFactory.createAPI();
                         if (city!=null) {
                              call = yelpAPI.search(city, para);
-                        }else if (latitude!=null) {
+                        }else {
                             CoordinateOptions coordinate = CoordinateOptions.builder()
-                                    .latitude(Double.parseDouble(latitude))
-                                    .longitude(Double.parseDouble(longitude)).build();
+                                    .latitude(latitude)
+                                    .longitude(longitude).build();
                             call = yelpAPI.search(coordinate, para);
                         }
                         Response<SearchResponse> response = call.execute();

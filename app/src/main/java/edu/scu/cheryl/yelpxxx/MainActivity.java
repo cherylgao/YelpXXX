@@ -11,14 +11,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -32,11 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button lucky;
     EditText restaurantName;
     EditText cityName;
+    TextView location;
     Button search;
+    Button show;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
-    String mLatitudeText;
-    String mLongitudeText;
+    double mLatitude;
+    double mLongitude;
+    final String TAG = MainActivity.class.getSimpleName();
 
 
     @Override
@@ -45,20 +51,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // Create an instance of GoogleAPIClient.
-        //GoogleApiClient mGoogleApiClient= new GoogleApiClient.Builder();
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
+        if(checkPlayServices()) {
+            if (mGoogleApiClient == null) {
+                mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
         }
+        location = (TextView) findViewById(R.id.lblLocation);
 
         nearby = (Button) findViewById(R.id.nearbyButton);
         nearby.setOnClickListener(this);
         lucky = (Button) findViewById(R.id.luckyButton);
         lucky.setOnClickListener(this);
         restaurantName = (EditText) findViewById(R.id.restaurantName);
+        show= (Button) findViewById(R.id.show);
 
         cityName = (EditText) findViewById(R.id.cityName);
 
@@ -79,6 +88,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnected(Bundle connectionHint) {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+        getLocation();
+//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        if (mLastLocation != null) {
+//             mLatitudeText= String.valueOf(mLastLocation.getLatitude());
+//             mLongitudeText=String.valueOf(mLastLocation.getLongitude());
+//        }
+    }
+    private boolean checkPlayServices(){
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode!=ConnectionResult.SUCCESS){
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, 1000).show();
+            }else {
+                toast("this device is not supported");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -91,14 +132,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-             mLatitudeText= String.valueOf(mLastLocation.getLatitude());
-             mLongitudeText=String.valueOf(mLastLocation.getLongitude());
+            mLatitude= mLastLocation.getLatitude();
+            mLongitude=mLastLocation.getLongitude();
+            location.setText(mLatitude + ", "+ mLongitude);
+        }else{
+            location.setText("cannot get location");
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -118,10 +162,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 restaurant=restaurantName.getText().toString();
                 Intent intent= new Intent(MainActivity.this, RestaurantList.class);
                 intent.putExtra("restaurant", restaurant);
-                intent.putExtra("latitude", mLatitudeText);
-                intent.putExtra("longitude", mLongitudeText);
+                intent.putExtra("latitude", mLatitude);
+                intent.putExtra("longitude", mLongitude);
                 startActivity(intent);
                 break;
+            case R.id.show:
+                getLocation();
             case R.id.luckyButton:
                 Intent intent1= new Intent(MainActivity.this, LuckyActivity.class);
                 startActivity(intent1);
@@ -167,20 +213,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-//        if (!mIntentInProgress && result.hasResolution()) {
-//            try {
-//                mIntentInProgress = true;
-//                result.startResolutionForResult(this, // your activity
-//                        RC_SIGN_IN);
-//            } catch (IntentSender.SendIntentException e) {
-//                // The intent was canceled before it was sent. Return to
-//                // default
-//                // state and attempt to connect to get an updated
-//                // ConnectionResult.
-//                mIntentInProgress = false;
-//                mGoogleApiClient.connect();
-//            }
-//        }
+        Log.i(TAG, "connection failed:connection result.getErrorCode()= " + connectionResult.getErrorCode());
+
+
 
     }
 }

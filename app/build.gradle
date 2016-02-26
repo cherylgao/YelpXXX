@@ -10,7 +10,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        //multiDexEnabled true
     }
     buildTypes {
         release {
@@ -34,6 +33,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.yelp.clientlib:yelp-android:1.0.0'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    //compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
 }
