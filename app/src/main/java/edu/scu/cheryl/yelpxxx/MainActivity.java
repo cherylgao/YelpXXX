@@ -205,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.luckyButton:
                 Intent intent1= new Intent(MainActivity.this, LuckyActivity.class);
+                intent1.putExtra("latitude", mLatitude);
+                intent1.putExtra("longitude", mLongitude);
                 startActivity(intent1);
                 break;
             case R.id.searchButton:
