@@ -86,6 +86,7 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
 
                 @Override
                 protected void onPostExecute(String result) {
+                    //toast("kkkkkkk");
                     lv.setAdapter(new RestaurantArrayAdaptor(cur, R.layout.my_list, restaurants));
 
                     //mSearchResultsText.setText(result);
