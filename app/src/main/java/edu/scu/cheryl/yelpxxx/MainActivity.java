@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
         switch (v.getId()){
             case R.id.nearbyButton:
+                mGoogleApiClient.connect();
                 restaurant=restaurantName.getText().toString();
                 Intent intent= new Intent(MainActivity.this, RestaurantList.class);
                 intent.putExtra("restaurant", restaurant);

@@ -40,6 +40,8 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
     private static final String TOKEN = "JrmitrWu9XVqy0namjf6PGLFZ_370LNc";
     private static final String TOKEN_SECRET = "Pse21d6tQkRqinuQUYnADDs-s3c";
     private ListView lv;
+    double latitude;
+    double longitude;
     Call<SearchResponse> call;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_restaurant_list);
         String restaurant= getIntent().getStringExtra("restaurant");
         final String city=getIntent().getStringExtra("city");
-        final double latitude=getIntent().getDoubleExtra("latitude", 0.0);
-        final double longitude=getIntent().getDoubleExtra("longitude", 0.0);
+        latitude=getIntent().getDoubleExtra("latitude", 0.0);
+        longitude=getIntent().getDoubleExtra("longitude", 0.0);
 
             final Map<String, String> para = new HashMap<>();
             para.put("term", restaurant);
@@ -129,6 +131,8 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
         Business restaurant = restaurants.get(position);
         Intent intent = new Intent(RestaurantList.this, DetailActivity.class);
         intent.putExtra("id", restaurant.id());
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
         startActivity(intent);
 
     }
