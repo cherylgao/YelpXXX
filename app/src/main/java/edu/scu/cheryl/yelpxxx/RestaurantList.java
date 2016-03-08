@@ -52,52 +52,51 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
         latitude=getIntent().getDoubleExtra("latitude", 0.0);
         longitude=getIntent().getDoubleExtra("longitude", 0.0);
 
-            final Map<String, String> para = new HashMap<>();
-            para.put("term", restaurant);
-            para.put("limit", "4");
-            para.put("lang", "fr");
-            lv = (ListView) findViewById(R.id.restaurantList);
-            lv.setOnItemClickListener(this);
-            final RestaurantList cur = this;
+        final Map<String, String> para = new HashMap<>();
+        para.put("term", restaurant);
+        para.put("limit", "4");
+        para.put("lang", "fr");
+        lv = (ListView) findViewById(R.id.restaurantList);
+        lv.setOnItemClickListener(this);
+        final RestaurantList cur = this;
         /*try {
             Response<SearchResponse> response = call.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-            new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    try {
-                        YelpAPIFactory apiFactory = new YelpAPIFactory(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
-                        YelpAPI yelpAPI = apiFactory.createAPI();
-                        if (city!=null) {
-                             call = yelpAPI.search(city, para);
-                        }else {
-                            CoordinateOptions coordinate = CoordinateOptions.builder()
-                                    .latitude(latitude)
-                                    .longitude(longitude).build();
-                            call = yelpAPI.search(coordinate, para);
-                        }
-                        Response<SearchResponse> response = call.execute();
-                        restaurants = response.body().businesses();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+                    YelpAPIFactory apiFactory = new YelpAPIFactory(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
+                    YelpAPI yelpAPI = apiFactory.createAPI();
+                    if (city!=null) {
+                        call = yelpAPI.search(city, para);
+                    }else {
+                        CoordinateOptions coordinate = CoordinateOptions.builder()
+                                .latitude(latitude)
+                                .longitude(longitude).build();
+                        call = yelpAPI.search(coordinate, para);
                     }
-                    return "s";
+                    Response<SearchResponse> response = call.execute();
+                    restaurants = response.body().businesses();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                return "s";
+            }
 
-                @Override
-                protected void onPostExecute(String result) {
-                    //toast("kkkkkkk");
-                    lv.setAdapter(new RestaurantArrayAdaptor(cur, R.layout.my_list, restaurants));
+            @Override
+            protected void onPostExecute(String result) {
+                //toast("kkkkkkk");
+                lv.setAdapter(new RestaurantArrayAdaptor(cur, R.layout.my_list, restaurants));
 
-                    //mSearchResultsText.setText(result);
-                    //setProgressBarIndeterminateVisibility(false);
-                }
-            }.execute();
+                //mSearchResultsText.setText(result);
+                //setProgressBarIndeterminateVisibility(false);
+            }
+        }.execute();
 
         /*Callback<SearchResponse> callback=new Callback<SearchResponse>(){
-
             @Override
             public void onResponse(Response<SearchResponse> response, Retrofit retrofit) {
                 //Response<SearchResponse> response = call.execute();
@@ -110,8 +109,8 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
                 //System.out.println("wrong");
             }
         };*/
-            //call.enqueue(callback);
-            //restaurants = new ArrayList<>();
+        //call.enqueue(callback);
+        //restaurants = new ArrayList<>();
 
 
 
@@ -130,9 +129,15 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
 
         Business restaurant = restaurants.get(position);
         Intent intent = new Intent(RestaurantList.this, DetailActivity.class);
-        intent.putExtra("id", restaurant.id());
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
+        intent.putExtra("name", restaurant.name());
+        intent.putExtra("phone", restaurant.phone());
+        String address = "";
+        for(String addr: restaurant.location().displayAddress()){
+            address += addr + " \n";
+        }
+        intent.putExtra("img",restaurant.imageUrl());
+        intent.putExtra("address",address);
+        intent.putExtra("activity","list");
         startActivity(intent);
 
     }
@@ -163,4 +168,5 @@ public class RestaurantList extends AppCompatActivity implements AdapterView.OnI
     private void toast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
 }

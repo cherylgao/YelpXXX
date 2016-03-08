@@ -10,120 +10,99 @@
     tools:context="edu.scu.cheryl.yelpxxx.DetailActivity">
 
 
-<TextView android:text="Restaurant Name" android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/restName"
-    android:textSize="30dp"
-    android:layout_marginTop="26dp"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    <TextView android:text="Restaurant Name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restName"
+        android:textSize="30dp"
+        android:layout_marginTop="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="XXX Likes"
-    android:id="@+id/like"
-    android:layout_below="@+id/restName"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="21dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Address"
-    android:id="@+id/restAddress"
-    android:layout_above="@+id/phoneNum"
-    android:layout_alignParentLeft="true"
-    android:layout_marginTop="8dp"
-    android:layout_alignParentStart="true" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="XXX Miles Away"
-    android:id="@+id/milesAway"
-    android:layout_marginTop="8dp"
-    android:textSize="15dp"
-    android:layout_toRightOf="@+id/restName"
-    android:layout_toEndOf="@+id/restName" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Hours"
-    android:layout_marginTop="8dp"
-    android:id="@+id/hours"
-    android:layout_alignBottom="@+id/restImage"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Phone Number"
-    android:layout_marginTop="8dp"
-    android:id="@+id/phoneNum"
-    android:layout_above="@+id/hours"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
-
-<ImageView
-    android:layout_width="190dp"
-    android:layout_height="120dp"
-    android:id="@+id/restImage"
-    android:src="@mipmap/ic_launcher"
-    android:layout_alignTop="@+id/like"
-    android:layout_alignRight="@+id/milesAway"
-    android:layout_alignEnd="@+id/milesAway" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Address"
+        android:id="@+id/restAddress"
+        android:layout_below="@+id/restName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
 
 
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Top Dishes"
-    android:id="@+id/textView6"
-    android:layout_centerVertical="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Phone Number"
+        android:id="@+id/phoneNum"
+        android:layout_marginBottom="40dp"
+        android:layout_alignBottom="@+id/restImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"/>
 
-<ListView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/listView"
-    android:layout_below="@+id/textView6"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="18dp"
-    android:layout_toLeftOf="@+id/restImage"
-    android:layout_toStartOf="@+id/restImage" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:id="@+id/restImage"
+        android:layout_below="@+id/restName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"/>
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Dishes Voting"
-    android:id="@+id/textView7"
-    android:layout_centerVertical="true"
-    android:layout_toRightOf="@+id/listView"
-    android:layout_toEndOf="@+id/listView" />
 
-<ListView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/listView2"
-    android:layout_alignTop="@+id/listView"
-    android:layout_toRightOf="@+id/listView"
-    android:layout_toEndOf="@+id/listView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Top Dishes(click to vote)"
+        android:id="@+id/textView6"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dishList"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@+id/restImage"
+        android:layout_toStartOf="@+id/restImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Reviews"
+        android:id="@+id/textView7"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_alignLeft="@+id/writeReview"
+        android:layout_alignStart="@+id/writeReview" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reviewList"
+        android:layout_alignTop="@+id/dishList"
+        android:layout_toRightOf="@+id/dishList"
+        android:textStyle="bold"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Write A Review"
+        android:id="@+id/writeReview"
+        android:layout_above="@+id/restImage"
+        android:layout_alignRight="@+id/restImage"
+        android:layout_alignEnd="@+id/restImage" />
 
 
 </RelativeLayout>

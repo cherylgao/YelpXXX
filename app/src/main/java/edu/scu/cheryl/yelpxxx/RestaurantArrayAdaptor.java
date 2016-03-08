@@ -113,7 +113,7 @@ public class RestaurantArrayAdaptor extends ArrayAdapter<Business> {
 
 
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    /*private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
@@ -136,7 +136,7 @@ public class RestaurantArrayAdaptor extends ArrayAdapter<Business> {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
-    }
+    }*/
 }
 
 
